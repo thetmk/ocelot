@@ -753,14 +753,14 @@ std::string worker::update(std::map<std::string, std::string> &params) {
 		}
 	} else if(params["action"] == "set_personal_freeleech") {
 		std::string passkey = params["passkey"];
-                mysqlpp::DateTime dt = mysqlpp::DateTime(params["until_time"]);
+                time_t pfl = (time_t)atoi(params["time"].c_str());
                 
 		user_list::iterator i = users_list.find(passkey);
 		if (i == users_list.end()) {
 			std::cout << "No user with passkey " << passkey << " found when attempting set personal freeleech!" << std::endl;
 		} else {
-			users_list[passkey].pfl = dt;
-			std::cout << "Personal freeleech set to user " << passkey << " until time: " << params["until_time"] << std::endl;
+			users_list[passkey].pfl = pfl;
+			std::cout << "Personal freeleech set to user " << passkey << " until time: " << params["time"] << std::endl;
 		}
             
         } else if(params["action"] == "add_blacklist") {
