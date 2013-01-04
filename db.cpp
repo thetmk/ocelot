@@ -103,7 +103,7 @@ void mysql::load_tokens(std::unordered_map<std::string, torrent> &torrents) {
                 size_t num_rows = res.num_rows();
                 for (size_t i = 0; i < num_rows; i++) {
                         std::string info_hash;
-                        res[i][2].to_string(info_hash);
+                        res[i][3].to_string(info_hash);
                         std::unordered_map<std::string, torrent>::iterator it = torrents.find(info_hash);
                         if (it != torrents.end()) {
                                 mysqlpp::DateTime fl = res[i][1]; 

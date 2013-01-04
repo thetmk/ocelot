@@ -2,7 +2,7 @@
 
 config::config() {
 	host = "127.0.0.1";
-	port = 34000;
+	port = 2710;
 	max_connections = 512;
 	max_read_buffer = 4096;
 	timeout_interval = 20;
@@ -16,8 +16,8 @@ config::config() {
 	
 	mysql_db = "gazelle";
 	mysql_host = "127.0.0.1:3306";
-	mysql_username = "***";
-	mysql_password = "***";
+	mysql_username = "root";
+	mysql_password = "";
 	
-	site_password="********************************"; // MUST BE 32 CHARS
+	site_password="12345678901234567890123456789012"; // MUST BE 32 CHARS
 }
