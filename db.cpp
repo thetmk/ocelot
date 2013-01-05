@@ -46,6 +46,17 @@ mysql::mysql(std::string mysql_db, std::string mysql_host, std::string username,
         logger_ptr = logger::get_instance();
 }
 
+void mysql::load_site_options(site_options_t &site_options) {
+        mysqlpp::Query query = conn.query("SELECT FreeLeech FROM site_options;");
+        site_options.freeleech = 0;
+        if(mysqlpp::StoreQueryResult res = query.store()) {
+                if(res.num_rows() > 0) {
+                        mysqlpp::DateTime fl = res[0][0];
+                        site_options.freeleech = fl;
+                }
+        }
+}
+
 void mysql::load_torrents(std::unordered_map<std::string, torrent> &torrents) {
         mysqlpp::Query query = conn.query("SELECT ID, info_hash, freetorrent, double_seed, Snatched FROM torrents ORDER BY ID;");
         if(mysqlpp::StoreQueryResult res = query.store()) {

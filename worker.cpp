@@ -27,7 +27,7 @@
 
 //---------- Worker - does stuff with input
 
-worker::worker(torrent_list &torrents, user_list &users, std::vector<std::string> &_blacklist, config * conf_obj, mysql * db_obj, site_comm &sc) : torrents_list(torrents), users_list(users), blacklist(_blacklist), conf(conf_obj), db(db_obj), s_comm(sc) {
+worker::worker(site_options_t &options, torrent_list &torrents, user_list &users, std::vector<std::string> &_blacklist, config * conf_obj, mysql * db_obj, site_comm &sc) : site_options(options), torrents_list(torrents), users_list(users), blacklist(_blacklist), conf(conf_obj), db(db_obj), s_comm(sc) {
 	status = OPEN;
 }
 bool worker::signal(int sig) {
@@ -346,7 +346,8 @@ std::string worker::announce(torrent &tor, user &u, std::map<std::string, std::s
                         if (tor.free_torrent == NEUTRAL) {
 				downloaded_change = 0;
 				uploaded_change = 0;
-			} else if(tor.free_torrent == FREE || (sit != tor.tokened_users.end() && sit->second.free_leech >= now) || u.pfl >= now) {
+			} else if(tor.free_torrent == FREE || (site_options.freeleech >= now) || 
+                                 (sit != tor.tokened_users.end() && sit->second.free_leech >= now) || u.pfl >= now) {
 				downloaded_change = 0;
 			}
 			
@@ -585,7 +586,11 @@ std::string worker::scrape(const std::list<std::string> &infohashes) {
 
 //TODO: Restrict to local IPs
 std::string worker::update(std::map<std::string, std::string> &params) {
-	if(params["action"] == "change_passkey") {
+        if(params["action"] == "site_option") {
+            if(params["set"] == "freeleech") {
+                site_options.freeleech = (time_t)atoi(params["time"].c_str());
+            }
+        } else if(params["action"] == "change_passkey") {
 		std::string oldpasskey = params["oldpasskey"];
 		std::string newpasskey = params["newpasskey"];
 		user_list::iterator i = users_list.find(oldpasskey);

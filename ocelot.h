@@ -6,6 +6,10 @@
 #include <boost/thread/thread.hpp>
 
 typedef struct {
+    time_t freeleech;
+} site_options_t;
+
+typedef struct {
 	int userid;
 	std::string peer_id;
 	std::string user_agent;

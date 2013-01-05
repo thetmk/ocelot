@@ -12,6 +12,7 @@ enum tracker_status { OPEN, PAUSED, CLOSING }; // tracker status
 
 class worker {
 	private:
+                site_options_t site_options;
 		torrent_list torrents_list;
 		user_list users_list;
 		std::vector<std::string> blacklist;
@@ -22,7 +23,7 @@ class worker {
 		site_comm s_comm;
 
 	public:
-		worker(torrent_list &torrents, user_list &users, std::vector<std::string> &_blacklist, config * conf_obj, mysql * db_obj, site_comm &sc);
+		worker(site_options_t &site_options, torrent_list &torrents, user_list &users, std::vector<std::string> &_blacklist, config * conf_obj, mysql * db_obj, site_comm &sc);
 		std::string work(std::string &input, std::string &ip);
 		std::string error(std::string err);
 		std::string announce(torrent &tor, user &u, std::map<std::string, std::string> &params, std::map<std::string, std::string> &headers, std::string &ip);

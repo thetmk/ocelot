@@ -6,7 +6,6 @@
 #include <unordered_map>
 #include <queue>
 #include <boost/thread/mutex.hpp>
-
 #include "logger.h"
 
 class mysql {
@@ -54,6 +53,7 @@ class mysql {
 
 	public:
 		mysql(std::string mysql_db, std::string mysql_host, std::string username, std::string password);
+                void load_site_options(site_options_t &site_options);
 		void load_torrents(std::unordered_map<std::string, torrent> &torrents);
 		void load_users(std::unordered_map<std::string, user> &users);
 		void load_tokens(std::unordered_map<std::string, torrent> &torrents);

@@ -49,11 +49,15 @@ int main() {
 	std::unordered_map<std::string, torrent> torrents_list;
 	db.load_torrents(torrents_list);
 	std::cout << "Loaded " << torrents_list.size() << " torrents" << std::endl;
-
+        
 	db.load_tokens(torrents_list);
+
+        // Lanz: new site options struct, handles site wide freeleech for now.
+        site_options_t site_options;
+        db.load_site_options(site_options);
         
 	// Create worker object, which handles announces and scrapes and all that jazz
-	work = new worker(torrents_list, users_list, blacklist, &conf, &db, sc);
+	work = new worker(site_options, torrents_list, users_list, blacklist, &conf, &db, sc);
 	
 	// Create connection mother, which binds to its socket and handles the event stuff
 	mother = new connection_mother(work, &conf, &db);
