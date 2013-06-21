@@ -56,6 +56,10 @@ std::string worker::work(std::string &input, std::string &ip) {
 	std::string passkey;
 	passkey.reserve(32);
 	if(input[37] != '/') {
+		// robots.txt requested?
+		if(input[11] == '.')
+			return "User-agent: *\nDisallow: /";
+
 		//std::cout << "Malformed Announce: " << input;
 		return error("Malformed announce");
 	} 
