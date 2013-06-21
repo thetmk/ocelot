@@ -51,6 +51,7 @@ typedef struct {
 	int id;
 	bool can_leech;
         time_t pfl;     // personal freeleech
+        int pmid;
 } user;
 
 

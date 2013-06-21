@@ -347,7 +347,7 @@ std::string worker::announce(torrent &tor, user &u, std::map<std::string, std::s
 				downloaded_change = 0;
 				uploaded_change = 0;
 			} else if(tor.free_torrent == FREE || (site_options.freeleech >= now) || 
-                                 (sit != tor.tokened_users.end() && sit->second.free_leech >= now) || u.pfl >= now) {
+                                 (sit != tor.tokened_users.end() && sit->second.free_leech >= now) || u.pfl >= now || u.pmid == 20) {
 				downloaded_change = 0;
 			}
 			
@@ -767,7 +767,17 @@ std::string worker::update(std::map<std::string, std::string> &params) {
 			users_list[passkey].pfl = pfl;
 			std::cout << "Personal freeleech set to user " << passkey << " until time: " << params["time"] << std::endl;
 		}
-            
+        } else if(params["action"] == "set_permissionid") {
+                std::string passkey = params["passkey"];
+                int pmid = atoi(params["permissionid"].c_str());
+                
+                user_list::iterator i = users_list.find(passkey);
+                if (i == users_list.end()) {
+                        std::cout << "No user with passkey " << passkey << " found when attempting to set permissionid!" << std::endl;
+                } else {
+                        users_list[passkey].pmid = pmid;
+                        std::cout << "PermissionID " << params["permissionid"] << " set for user " << passkey << std::endl;
+                }
         } else if(params["action"] == "add_blacklist") {
 		std::string peer_id = params["peer_id"];
 		blacklist.push_back(peer_id);
