@@ -45,6 +45,11 @@ bool worker::signal(int sig) {
 std::string worker::work(std::string &input, std::string &ip) {
 	unsigned int input_length = input.length();
 	
+
+	
+        // robots.txt requested?
+        if(input.find("/robots.txt") != std::string::npos)
+                return "User-agent: *\nDisallow: /";
 	//---------- Parse request - ugly but fast. Using substr exploded.
 	if(input_length < 60) { // Way too short to be anything useful
 		return error("GET string too short");
@@ -57,8 +62,8 @@ std::string worker::work(std::string &input, std::string &ip) {
 	passkey.reserve(32);
 	if(input[37] != '/') {
 	// robots.txt requested?
-		if(input[11] == '.')
-			 return "User-agent: *\nDisallow: /";
+	//	if(input[11] == '.')
+	//		 return "User-agent: *\nDisallow: /";
 		//std::cout << "Malformed Announce: " << input;
 		return error("Malformed announce");
 	} 
