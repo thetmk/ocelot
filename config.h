@@ -18,6 +18,7 @@ class config {
 		int peers_timeout;
 		
 		unsigned int reap_peers_interval;
+                unsigned int keep_speed;
 		
 		// MySQL
 		std::string mysql_db;

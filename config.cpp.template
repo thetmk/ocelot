@@ -13,6 +13,7 @@ config::config() {
 	peers_timeout = 2700; //Announce interval * 1.5
 	
 	reap_peers_interval = 1800;
+        keep_speed = 10485760; //upspeed > keep_speed => xbt_peers_history
 	
 	mysql_db = "gazelle";
 	mysql_host = "127.0.0.1:3306";

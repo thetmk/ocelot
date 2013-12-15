@@ -524,7 +524,7 @@ std::string worker::announce(torrent &tor, user &u, std::map<std::string, std::s
 	db->record_peer(record_str, ip, port, peer_id, headers["user-agent"]);
 // Lanz, disapled since it's not used in the front end and table is missing. Add later?
 // Re-enabled.
-	if (real_uploaded_change > 0 || real_downloaded_change > 0) {
+        if (upspeed >= conf->keep_speed) { //real_uploaded_change > 0 || real_downloaded_change > 0
 		record.str("");
 		record << '(' << u.id << ',' << real_downloaded_change << ',' << left << ',' << real_uploaded_change << ',' << upspeed << ',' << downspeed << ',' << (cur_time - p->first_announced);
 		record_str = record.str();
