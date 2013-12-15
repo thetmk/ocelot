@@ -1,9 +1,4 @@
-# ignore object files
-*.o
-
-# ignore netbeans project folder
-nbproject
-
 config.cpp
-debug.log
+*.o
 ocelot
+debug.log
