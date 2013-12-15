@@ -16,7 +16,7 @@ case $1 in
                     then
                         echo "Ocelot is allready running with PID: "$PID;
                     else
-                        /home/tracker/ocelot/ocelot >> /home/tracker/ocelot.log &
+                        /home/nallen/ocelot/ocelot >> /home/nallen/ocelot.log &
                         echo "Ocelot started."
                 fi;;
 "stop")         if [ "$(pgrep ocelot)" ]
@@ -33,7 +33,7 @@ case $1 in
                     echo "Waiting for process to stop."
                     sleep 1;
                 done
-                /home/tracker/ocelot/ocelot >> /home/tracker/ocelot.log &
+                /home/nallen/ocelot/ocelot >> /home/nallen/ocelot.log &
                 echo "Restarted Ocelot";;
 "status")       if [ "$(pgrep ocelot)" ]
                     then
